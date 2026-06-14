@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SnapTok — TikTok Video Downloader
+
+A fast, no-watermark TikTok video downloader built with **Next.js 16**, **React 19**, and **Tailwind CSS 4**. No sign-up required.
+
+## Features
+
+- Download TikTok videos without watermark
+- One-click clipboard paste
+- Video preview before downloading
+- Shows author, duration, and channel info
+- PWA support (installable on mobile/desktop)
+- Deployed on Cloudflare Pages via `next-on-pages`
+
+## Tech Stack
+
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19 + Tailwind CSS 4 |
+| Styling | React Compiler enabled |
+| Deployment | Cloudflare Pages |
+| Worker API | Cloudflare Workers (video metadata) |
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.js              # Home page
+│   ├── layout.js            # Root layout
+│   ├── about/page.js        # About page
+│   ├── faq/page.js          # FAQ page
+│   ├── how-it-works/page.js # How it works page
+│   └── api/download/route.js# Video proxy API route
+├── components/
+│   ├── Downlode.jsx         # Main downloader UI
+│   ├── Footer.jsx           # Footer
+│   ├── BottomNav.jsx        # Mobile bottom navigation
+│   ├── InstallPrompt.jsx    # PWA install prompt
+│   └── ServiceWorkerRegister.jsx
+public/
+└── sw.js                    # Service worker
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. User pastes a TikTok video URL
+2. The app calls a Cloudflare Worker to fetch video metadata (title, thumbnail, direct video URL)
+3. The video is previewed in-browser
+4. On download, the request goes through `/api/download` (a Next.js API route) which proxies the video and serves it as `tiktok-video.mp4`
 
-## Learn More
+## Build & Deploy
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Production build
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Deploy to Cloudflare Pages
+npx wrangler pages deploy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
