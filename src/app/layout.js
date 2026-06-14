@@ -18,6 +18,8 @@ export const metadata = {
   },
   description:
     "SnapTok lets you download any TikTok video in HD without watermark — free, instant, no sign-up required. The fastest TikTok video saver online.",
+  applicationName: "SnapTok",
+  referrer: "origin-when-cross-origin",
   keywords: [
     "tiktok downloader",
     "snaptok",
@@ -27,10 +29,28 @@ export const metadata = {
     "tiktok video saver",
     "tiktok hd download",
     "free tiktok downloader",
+    "tiktok video download without watermark",
+    "tiktok mp4 download",
+    "online tiktok downloader",
+    "tiktok downloader no watermark",
+    "download tiktok for free",
+    "tiktok saver",
   ],
   authors: [{ name: "SnapTok" }],
   creator: "SnapTok",
   publisher: "SnapTok",
+  category: "technology",
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  verification: {
+    google: "chDhbXsqdq3gt6mJi7A_-jdAMjmDWra_vE4TOdIU46Q",
+  },
   openGraph: {
     type: "website",
     siteName: "SnapTok",
@@ -39,6 +59,14 @@ export const metadata = {
       "Save any TikTok video in HD without watermark. Free, instant, and no sign-up needed.",
     url: SITE_URL,
     locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "SnapTok — Download TikTok Videos Without Watermark",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -46,11 +74,19 @@ export const metadata = {
     description:
       "Save any TikTok video in HD without watermark. Free, instant, and no sign-up needed.",
     creator: "@snaptok",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   manifest: "/manifest.webmanifest",
   appleWebApp: {

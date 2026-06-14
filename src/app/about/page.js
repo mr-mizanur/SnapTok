@@ -9,6 +9,20 @@ export const metadata = {
     title: "About SnapTok — Free TikTok Video Downloader",
     description: "SnapTok is a free, fast TikTok video downloader with no watermark and no sign-up.",
     url: "/about",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "About SnapTok",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About SnapTok — Free TikTok Video Downloader",
+    description: "SnapTok is a free, fast TikTok video downloader with no watermark and no sign-up.",
+    images: ["/opengraph-image"],
   },
 };
 

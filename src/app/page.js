@@ -9,6 +9,20 @@ export const metadata = {
     title: "SnapTok — Download TikTok Videos Without Watermark",
     description: "Paste any TikTok URL to instantly download HD videos without watermark.",
     url: "/",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "SnapTok — Download TikTok Videos Without Watermark",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SnapTok — Download TikTok Videos Without Watermark",
+    description: "Paste any TikTok URL to instantly download HD videos without watermark.",
+    images: ["/opengraph-image"],
   },
 };
 
