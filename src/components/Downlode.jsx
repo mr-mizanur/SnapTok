@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Downlode() {
   const [url, setUrl] = useState("");
@@ -153,11 +154,13 @@ export default function Downlode() {
           {/* Result */}
           {data && (
             <div className="mt-10 backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.7)] ring-1 ring-white/5">
-              <div className="relative">
-                <img
+              <div className="relative h-[300px]">
+                <Image
                   src={data.thumbnail}
                   alt={data.title}
-                  className="w-full h-[300px] object-cover"
+                  fill
+                  unoptimized
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-6 right-6">

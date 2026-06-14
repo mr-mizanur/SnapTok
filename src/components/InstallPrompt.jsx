@@ -1,50 +1,66 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
+
+const noSubscribe = () => () => {};
+
+function useIsIOS() {
+  return useSyncExternalStore(
+    noSubscribe,
+    () => /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+    () => false
+  );
+}
+
+function useIsInstalled() {
+  return useSyncExternalStore(
+    noSubscribe,
+    () => window.matchMedia("(display-mode: standalone)").matches,
+    () => false
+  );
+}
+
+function useWasDismissed() {
+  return useSyncExternalStore(
+    noSubscribe,
+    () => { try { return !!sessionStorage.getItem("install-dismissed"); } catch { return false; } },
+    () => false
+  );
+}
 
 export default function InstallPrompt() {
+  const isIOS = useIsIOS();
+  const isInstalled = useIsInstalled();
+  const wasDismissed = useWasDismissed();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [show, setShow] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    // Already installed — never show
-    if (window.matchMedia("(display-mode: standalone)").matches) return;
-    if (sessionStorage.getItem("install-dismissed")) return;
-
-    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    setIsIOS(ios);
-
-    if (ios) {
-      setShow(true);
-      return;
-    }
+    if (isIOS || isInstalled) return;
 
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShow(true);
     };
     window.addEventListener("beforeinstallprompt", handler);
     return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
+  }, [isIOS, isInstalled]);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") setShow(false);
-    setDeferredPrompt(null);
+    if (outcome === "accepted") setDeferredPrompt(null);
   };
 
   const handleDismiss = () => {
-    setShow(false);
     setDismissed(true);
     sessionStorage.setItem("install-dismissed", "1");
   };
 
-  if (!show || dismissed) return null;
+  const shouldShow = !isInstalled && !wasDismissed && !dismissed && (isIOS || deferredPrompt !== null);
+
+  if (!shouldShow) return null;
 
   return (
     <div className="fixed top-3 left-3 right-3 z-[60] max-w-lg mx-auto animate-in slide-in-from-top-4 duration-300">
